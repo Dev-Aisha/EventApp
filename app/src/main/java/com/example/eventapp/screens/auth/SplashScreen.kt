@@ -19,6 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -32,24 +35,37 @@ import com.example.eventapp.ui.theme.PrimaryColor
 @Composable
 fun SplashScreen(navController: NavHostController) {
     Column(
-        Modifier.fillMaxSize(),
+        Modifier.fillMaxSize()
+            .semantics {
+                       testTag="SplashScreen"
+            },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(painter = painterResource(id = R.drawable.spalsh_screen),
             contentDescription = "",
             modifier = Modifier.padding(horizontal = 22.dp).size(300.dp)
+                .semantics {
+                    testTag="intro image"
+
+                }
 
         )
         Text(
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier.padding(vertical = 8.dp)
+                .semantics {
+                           contentDescription="title text"
+                },
             text = "Event App",
             color = PrimaryColor,
             fontWeight = FontWeight.Bold,
             fontSize = 22.sp
         )
         Text(
-            modifier = Modifier.padding(horizontal = 22.dp),
+            modifier = Modifier.padding(horizontal = 22.dp)
+                .semantics {
+                contentDescription="description text"
+            },
             textAlign = TextAlign.Center,
             text = "Plan what you will do to be more organized for today, tomorrow and beyond",
         )
@@ -62,7 +78,11 @@ fun SplashScreen(navController: NavHostController) {
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
                 .fillMaxWidth(0.8f)
-                .padding(12.dp),
+                .padding(12.dp)
+                .semantics {
+                           testTag="Login Button"
+                }
+            ,
             colors = ButtonDefaults.buttonColors(
                 containerColor = PrimaryColor
             )

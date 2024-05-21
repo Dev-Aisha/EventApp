@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.eventapp.navigation.BottomNavigationItem
@@ -49,13 +51,16 @@ fun BottomBar(navController: NavHostController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             BottomNavigationItem().bottomNavigationItems()
-                .forEachIndexed { index, bottomNavigationItem ->
+                .forEachIndexed {
+                                index, bottomNavigationItem ->
                     if (bottomNavigationItem.route == Screens.MainApp.AddScreen.route) {
                         Icon(
                             bottomNavigationItem.icon,
                             "",
                             modifier = Modifier
-                                .size(75.dp)
+                                .size(75.dp).semantics {
+                                    testTag = "Navigate To Add Screen"
+                                }
                                 .clickable {
                                     navigationSelectedItem.value = index
                                     navController.navigate(bottomNavigationItem.route) {
@@ -72,6 +77,9 @@ fun BottomBar(navController: NavHostController) {
                             bottomNavigationItem.icon,
                             "",
                             modifier = Modifier
+                                .semantics {
+                                testTag = bottomNavigationItem.route
+                            }
                                 .clickable {
                                     navigationSelectedItem.value = index
                                     navController.navigate(bottomNavigationItem.route) {

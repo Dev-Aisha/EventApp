@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor() : ViewModel() {
 
-    private val auth = Firebase.auth
+    var auth = Firebase.auth
     var isSignedIn =
         if (auth.currentUser == null) mutableStateOf(Screens.Authentication.route) else mutableStateOf(
             Screens.MainApp.route
@@ -43,7 +43,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun loguot(context: Context){
+    fun logout(context: Context) {
         auth.signOut()
         GoogleSignIn.getClient(
             context,
