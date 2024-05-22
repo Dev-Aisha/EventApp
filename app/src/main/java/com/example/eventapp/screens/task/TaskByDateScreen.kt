@@ -50,7 +50,7 @@ fun TaskByDateScreen(viewmodel: TaskViewModel) {
         Image(
             painter = painterResource(id = R.drawable.background_image),
             contentDescription = "",
-            modifier = Modifier.fillMaxSize().alpha(0.5f),
+            modifier = Modifier.fillMaxSize().alpha(0.3f),
             contentScale = ContentScale.Crop
         )
             Column {
@@ -98,20 +98,24 @@ fun TaskByDateScreen(viewmodel: TaskViewModel) {
                                     item {
                                         Text(text = it.key.orEmpty(),color = Color.White)
                                     }
-                                    items(it.value) { taskWithTags ->
+                                    items(it.value) {
+                                        taskWithTags ->
                                         Box(modifier = Modifier.fillParentMaxWidth(0.6f)) {
                                             TaskCard(
                                                 taskTitle = taskWithTags.task.title,
                                                 taskWithTags.task.timeFrom,
                                                 taskWithTags.task.timeTo,
-                                                taskWithTags.tags
+                                                taskWithTags.tags,
+                                                task = taskWithTags.task,
+                                                viewModel = viewmodel
                                             )
                                         }
                                     }
                                 }
                             }
                         }
-                    } else {
+                    }
+                    else {
                         item {
                             Column(
                                 modifier = Modifier.fillMaxSize(),

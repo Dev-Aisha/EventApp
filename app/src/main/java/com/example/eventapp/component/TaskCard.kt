@@ -1,5 +1,7 @@
 package com.example.eventapp.component
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,31 +48,21 @@ import com.example.eventapp.data.entity.Tags
 import com.example.eventapp.data.entity.Task
 import com.example.eventapp.navigation.Screens
 import com.example.eventapp.screens.task.AddTaskViewModel
+import com.example.eventapp.screens.task.TaskViewModel
 import com.example.eventapp.ui.theme.Navy
 import com.example.eventapp.ui.theme.PrimaryColor
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Tags?>) {
+fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Tags?>, task: Task,
+             viewModel: TaskViewModel
+) {
     val dividerHeight = remember {
         mutableStateOf(50.dp)
     }
 
 
     val navController = rememberNavController()
-
-    val viewmodel: AddTaskViewModel = hiltViewModel()
-
-
-    val task = Task(
-        title = taskTitle,
-        description = "",
-        date = "",
-        timeFrom = timeFrom,
-        timeTo = timeTo,
-        taskType ="",
-        tagName = tag.toString()
-    )
 
     Card(
         modifier = Modifier
@@ -156,53 +149,94 @@ fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Ta
                                 .fillMaxSize(),
                         )
                     }
+
+                    val context: Context = LocalContext.current
+
                     DropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        properties = PopupProperties(clippingEnabled = false),
-//                    offset = DpOffset(0.dp, 64.dp)
+                        onDismissRequest = { expanded = false }
                     ) {
                         DropdownMenuItem(
-
-                            { Text("Edit") },
+                            text = { Text("Edit") },
+                            onClick = { },
                             leadingIcon = {
                                 Icon(
                                     Icons.Outlined.Edit,
                                     contentDescription = null
                                 )
-                            },
-                            onClick = {
-                                expanded = false
-                                navController.navigate(Screens.MainApp.AddScreen.route)
-                            }
-                        )
+                            })
                         DropdownMenuItem(
-
-                            { Text("Delete") },
+                            text = {
+                                Text("Delete")
+                                   },
+                            onClick = {
+                                viewModel.deleteTask(task)
+                                Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                            },
                             leadingIcon = {
                                 Icon(
                                     Icons.Outlined.Delete,
                                     contentDescription = null
                                 )
-                            },
-                            onClick =
-                            {
-                                expanded = false
-
-                                tag.forEach {
-                                    tag ->
-                                    if (tag != null) {
-                                        viewmodel.deleteTag(tag)
-                                    }
-                                }
-
-                                viewmodel.deleteTask(task)
-
                             }
-
-
                         )
+
                     }
+
+
+
+//                    val context: Context = LocalContext.current
+//                    DropdownMenu(
+//                        expanded = expanded,
+//                        onDismissRequest = { expanded = false },
+//                        properties = PopupProperties(clippingEnabled = false),
+////                    offset = DpOffset(0.dp, 64.dp)
+//                    ) {
+//                        DropdownMenuItem(
+//
+//                            { Text("Edit") },
+//                            leadingIcon = {
+//                                Icon(
+//                                    Icons.Outlined.Edit,
+//                                    contentDescription = null
+//                                )
+//                            },
+//                            onClick = {
+//                                expanded = false
+//                                navController.navigate(Screens.MainApp.AddScreen.route)
+//                            }
+//                        )
+//                        DropdownMenuItem(
+//
+//                            { Text("Delete") },
+//                            leadingIcon = {
+//                                Icon(
+//                                    Icons.Outlined.Delete,
+//                                    contentDescription = null
+//                                )
+//                            },
+//                            onClick =
+//                            {
+//                                expanded = false
+//
+//                                viewModel.deleteTask(task)
+//                                Toast.makeText(context, "Task deleted successfully", Toast.LENGTH_SHORT).show()
+//
+////                                tag.forEach {
+////                                    tag ->
+////                                    if (tag != null) {
+////                                        viewmodel.deleteTag(tag)
+////                                    }
+////                                }
+//
+//
+//                            }
+//
+//
+//                        )
+//                    }
+
+
                 }
 
 

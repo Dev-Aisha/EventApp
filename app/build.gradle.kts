@@ -55,6 +55,12 @@ android {
         }
     }
     android.buildFeatures.buildConfig= true
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
 }
 
 dependencies {
@@ -136,5 +142,8 @@ dependencies {
 
     //coil
     implementation (libs.coil.compose)
+
+    //change language
+    implementation ("androidx.appcompat:appcompat:1.6.1")
 
 }

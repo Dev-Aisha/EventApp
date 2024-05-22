@@ -23,13 +23,13 @@ import com.example.eventapp.component.TasksHeaderView
 import com.example.eventapp.data.entity.TagWithTaskLists
 
 @Composable
-fun TasksByCategory(tagWithTaskLists: TagWithTaskLists?, navController: NavHostController) {
+fun TasksByCategory(tagWithTaskLists: TagWithTaskLists?, navController: NavHostController,viewModel: TaskViewModel) {
     Box(modifier = Modifier.fillMaxSize().background(Color.Black),) {
 
         Image(
             painter = painterResource(id = R.drawable.background_image),
             contentDescription = "",
-            modifier = Modifier.fillMaxSize().alpha(0.5f),
+            modifier = Modifier.fillMaxSize().alpha(0.4f),
             contentScale = ContentScale.Crop
         )
 
@@ -47,7 +47,9 @@ fun TasksByCategory(tagWithTaskLists: TagWithTaskLists?, navController: NavHostC
                         taskTitle = it.title,
                         it.timeFrom,
                         timeTo = it.timeTo,
-                        tag = listOf(tagWithTaskLists?.tag)
+                        tag = listOf(tagWithTaskLists?.tag),
+                        task = it,
+                        viewModel = viewModel
                     )
                 }
             }

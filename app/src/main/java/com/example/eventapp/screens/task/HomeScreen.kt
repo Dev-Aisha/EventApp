@@ -67,7 +67,7 @@ fun HomeScreen(invoke: FirebaseUser?, navController: NavHostController, viewMode
         Image(
             painter = painterResource(id = R.drawable.back_main),
             contentDescription = "",
-            modifier = Modifier.fillMaxSize().alpha(0.5f),
+            modifier = Modifier.fillMaxSize().alpha(0.4f),
             contentScale = ContentScale.Crop
         )
 
@@ -217,7 +217,9 @@ fun HomeScreen(invoke: FirebaseUser?, navController: NavHostController, viewMode
                     taskTitle = it.task.title,
                     timeFrom = it.task.timeFrom,
                     timeTo = it.task.timeTo,
-                    tag = it.tags
+                    tag = it.tags,
+                    task= it.task,
+                    viewModel = viewModel,
                 )
             }
         }

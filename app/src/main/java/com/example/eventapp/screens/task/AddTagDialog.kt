@@ -63,38 +63,55 @@ fun AddTagDialog(navController: NavHostController, addTaskViewModel: AddTaskView
                 textColor = PrimaryColor,
                 value = addTaskViewModel.tagName
             )
+
+
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
+            )
+            {
                 getAllColors().forEach {
                     Canvas(modifier = Modifier
-                        .size(50.dp)
+                        .size(40.dp)
                         .clickable {
                             addTaskViewModel.tagColor.value = it
                                 .toArgb()
                                 .toString()
-                        }) {
+                        }
+                    )
+                    {
                         drawCircle(it)
                     }
                 }
             }
+
+
             Spacer(modifier = Modifier.size(22.dp))
+
+
+
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
+            )
+            {
                 getAllSystemIcons().forEach {
                     Icon(
                         it,
                         contentDescription = it.name,
                         modifier = Modifier
-                            .size(50.dp)
+                            .size(40.dp)
                             .clickable {
                                 addTaskViewModel.tagIcon.value = getIconName(it)
-                            })
+                            }
+                    )
                 }
             }
+
+
+
+
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

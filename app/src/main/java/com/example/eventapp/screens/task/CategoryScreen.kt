@@ -44,12 +44,13 @@ fun CategoryScreen(
         Image(
             painter = painterResource(id = R.drawable.background_image),
             contentDescription = "",
-            modifier = Modifier.fillMaxSize().alpha(0.5f),
+            modifier = Modifier.fillMaxSize().alpha(0.4f),
             contentScale = ContentScale.Crop
         )
 
         Column {
             UserImageWithEmail(user = user,navController)
+
             LazyVerticalGrid(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -64,7 +65,8 @@ fun CategoryScreen(
                         iconByName(it.tag.iconName),
                         it.tag.name,
                         "${it.tasks.size} Task"
-                    ) {
+                    )
+                    {
                         navController.navigate("${Screens.MainApp.TaskByCategory.route}/${it.tag.name}")
                     }
                 }

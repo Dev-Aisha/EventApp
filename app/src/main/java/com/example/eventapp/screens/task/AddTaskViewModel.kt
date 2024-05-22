@@ -69,16 +69,4 @@ class AddTaskViewModel @Inject constructor(val taskRepository: TaskRepository) :
         }
 
 
-    fun deleteTask(task: Task) {
-        viewModelScope.launch {
-            taskRepository.deleteTask(task)
-        }
-    }
-
-    fun deleteTag(tag: Tags) {
-        viewModelScope.launch {
-            taskRepository.deleteTag(tag)
-        }
-    }
-
     }

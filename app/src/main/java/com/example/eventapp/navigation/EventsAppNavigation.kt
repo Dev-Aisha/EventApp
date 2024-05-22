@@ -185,7 +185,8 @@ fun NavGraphBuilder.mainAppNavigation(
                     "tagName"
                 ).orEmpty()
             }
-            TasksByCategory(tagWithTaskLists, navController)
+            val viewModel: TaskViewModel = hiltViewModel()
+            TasksByCategory(tagWithTaskLists, navController, viewModel = viewModel)
         }
 
 
