@@ -82,11 +82,10 @@ fun TasksHeaderView(title: String, onBackClicked: () -> Boolean) {
             )
         }
 
-        SearchView() {
-            searchPhrase.value = it
-        }
+//        SearchView() {
+//            searchPhrase.value = it
+//        }
 
-        Spacer(modifier = Modifier.height(30.dp))
 
 
     }

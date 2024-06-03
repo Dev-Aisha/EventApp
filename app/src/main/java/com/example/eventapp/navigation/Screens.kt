@@ -22,6 +22,8 @@ sealed class Screens(val route: String) {
         data object TimeDialog : Screens("TimeDialog")
         data object AddTagDialog: Screens("AddTagDialog")
         data object TaskByCategory: Screens("TaskByCategory")
+        data object EditTaskScreen: Screens("EditTaskScreen")
+        data object Setting: Screens("Setting")
 
     }
     data object Authentication : Screens("authGraph") {
@@ -37,7 +39,7 @@ data class BottomNavigationItem(
 ) {
 
     //function to get the list of bottomNavigationItems
-    fun bottomNavigationItems() : List<BottomNavigationItem> {
+    fun bottomNavigationItems(): List<BottomNavigationItem> {
         return listOf(
             BottomNavigationItem(
                 icon = Icons.Outlined.Home,
@@ -51,16 +53,15 @@ data class BottomNavigationItem(
                 icon = Icons.Filled.AddCircle,
                 route = Screens.MainApp.AddScreen.route
             ),
-
-            BottomNavigationItem(
-                icon = Icons.Outlined.Settings,
-                route = Screens.MainApp.CategoryScreen.route
-            ),
-
             BottomNavigationItem(
                 icon = Icons.Outlined.DateRange,
                 route = Screens.MainApp.StaticsScreen.route
             ),
+
+            BottomNavigationItem(
+                icon = Icons.Outlined.Settings,
+                route = Screens.MainApp.CategoryScreen.route
+            )
         )
     }
 }

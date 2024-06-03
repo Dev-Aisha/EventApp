@@ -39,39 +39,43 @@ fun CategoryScreen(
 ) {
     val tagsWithTasksList = viewModel.tagWithTasks
 
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black),) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black),) {
 
         Image(
             painter = painterResource(id = R.drawable.background_image),
             contentDescription = "",
-            modifier = Modifier.fillMaxSize().alpha(0.4f),
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.4f),
             contentScale = ContentScale.Crop
         )
 
         Column {
-            UserImageWithEmail(user = user,navController)
-
-            LazyVerticalGrid(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 90.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                columns = GridCells.Fixed(2)
-            ) {
-                items(tagsWithTasksList.value) {
-                    TagCard(
-                        Color(it.tag.color.toIntOrNull() ?: PrimaryColor.toArgb()),
-                        iconByName(it.tag.iconName),
-                        it.tag.name,
-                        "${it.tasks.size} Task"
-                    )
-                    {
-                        navController.navigate("${Screens.MainApp.TaskByCategory.route}/${it.tag.name}")
+            UserImageWithEmail(user = user, navController)
+            Column {
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 90.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    columns = GridCells.Fixed(2)
+                ) {
+                    items(tagsWithTasksList.value) {
+                        TagCard(
+                            Color(it.tag.color.toIntOrNull() ?: PrimaryColor.toArgb()),
+                            iconByName(it.tag.iconName),
+                            it.tag.name,
+                            "${it.tasks.size} Task"
+                        ) {
+                            navController.navigate("${Screens.MainApp.TaskByCategory.route}/${it.tag.name}")
+                        }
                     }
                 }
-            }
 
+            }
         }
     }
 }

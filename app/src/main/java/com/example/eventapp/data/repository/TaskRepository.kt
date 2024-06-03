@@ -1,6 +1,7 @@
 package com.example.eventapp.data.repository
 
 import com.example.eventapp.data.dao.TaskDao
+import com.example.eventapp.data.entity.SearchResults
 import com.example.eventapp.data.entity.TagWithTaskLists
 import com.example.eventapp.data.entity.Tags
 import com.example.eventapp.data.entity.Task
@@ -39,9 +40,9 @@ class TaskRepository @Inject constructor(
         taskDao.deleteTag(tag)
     }
 
-    fun getTagsWithTask(tagName: String): Flow<List<TagWithTaskLists>> {
-        return taskDao.getTagsWithTask(tagName)
-    }
+//    fun getTagsWithTask(tagName: String): Flow<List<TagWithTaskLists>> {
+//        return taskDao.getTagsWithTask(tagName)
+//    }
 
     fun getAllTags(): Flow<List<Tags>> {
         return taskDao.getAllTags()
@@ -61,5 +62,47 @@ class TaskRepository @Inject constructor(
     }
 
     fun getTagWithTaskLists() = taskDao.getTagWithTaskLists()
+
+
+//    fun getTaskById(taskId: Long): Flow<Task> {
+//        return taskDao.getTaskById(taskId)
+//    }
+
+
+    suspend fun updateTaskWithTags(task: Task, tags: List<Tags>) {
+        taskDao.updateTaskWithTags(task, tags)
+    }
+
+    fun getAllTaskWithTags() = taskDao.getAllTaskWithTags()
+
+
+    suspend fun getTaskWithTagsById(taskId: Long) = taskDao.getTaskWithTagsById(taskId)
+
+
+
+
+    //88888888888888888888
+
+    suspend fun insertTaskTagCrossRefs(taskTagCrossRefs: List<TaskTagCrossRef>) {
+        taskDao.insertTaskTagCrossRefs(taskTagCrossRefs)
+    }
+
+
+
+    fun getTagWithTasksList(tagName: String): Flow<TagWithTaskLists> {
+        return taskDao.getTagsWithTask(tagName)
+    }
+
+
+
+    suspend fun searchCombined(searchQuery: String): SearchResults {
+        return taskDao.searchCombined(searchQuery)
+    }
+
+
+    fun getTaskCountByDateAndType(date: String, taskType: String): Flow<Int> {
+        return taskDao.getTaskCountByDateAndType(date, taskType)
+    }
+
 
 }

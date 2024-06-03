@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">EventApp</string>
+    <string name="task_pending">معلق</string>
+    <string name="task_ongoing">جار</string>
+    <string name="task_cancelled">ملغى</string>
+    <string name="task_completed">مكتمل</string>
+
+
+    <string name="my_tasks">مهامي</string>
+    <string name="today_tasks">مهام اليوم</string>
+    <string name="view_all">عرض الكل</string>
+    <string name="hi">مرحبا، %s</string>
+    <string name="let">لنجعل هذا اليوم مثمراً</string>
+
+    <string name="task">مهمة</string>
+
+
+    //Setting Screen
+    <string name="setting">الإعدادات</string>
+    <string name="general">عام</string>
+    <string name="language">اللغة</string>
+    <string name="delete_account">حذف الحساب</string>
+</resources>

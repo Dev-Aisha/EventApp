@@ -146,4 +146,11 @@ dependencies {
     //change language
     implementation ("androidx.appcompat:appcompat:1.6.1")
 
+    //vico
+    implementation(libs.vico.compose)
+    implementation(libs.vico.compose.m2)
+    implementation(libs.vico.compose.m3)
+    implementation(libs.vico.core)
+    implementation(libs.vico.views)
+
 }

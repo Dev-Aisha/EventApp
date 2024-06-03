@@ -102,7 +102,7 @@ fun UserImageWithEmail(user: FirebaseUser?, navController: NavHostController) {
                         },
                         onClick = {
                             expanded = false
-                            navController.navigate(Screens.MainApp.CategoryScreen.route)
+                            navController.navigate(Screens.MainApp.Setting.route)
                         }
                     )
                     DropdownMenuItem(

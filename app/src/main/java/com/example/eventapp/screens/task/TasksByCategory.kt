@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.eventapp.R
+import com.example.eventapp.component.SearchView
 import com.example.eventapp.component.TaskCard
 import com.example.eventapp.component.TasksHeaderView
 import com.example.eventapp.data.entity.TagWithTaskLists
@@ -37,6 +40,14 @@ fun TasksByCategory(tagWithTaskLists: TagWithTaskLists?, navController: NavHostC
             TasksHeaderView(tagWithTaskLists?.tag?.name.orEmpty()) {
                 navController.popBackStack()
             }
+
+            SearchView {
+                viewModel.searchInTasksAndTags(it)
+            }
+
+            Spacer(modifier = Modifier.size(18.dp))
+
+
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -49,7 +60,8 @@ fun TasksByCategory(tagWithTaskLists: TagWithTaskLists?, navController: NavHostC
                         timeTo = it.timeTo,
                         tag = listOf(tagWithTaskLists?.tag),
                         task = it,
-                        viewModel = viewModel
+                        viewModel = viewModel,
+                        navController = navController
                     )
                 }
             }

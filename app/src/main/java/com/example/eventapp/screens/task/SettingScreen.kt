@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 
@@ -164,14 +165,16 @@ fun SettingScreen(navController: NavHostController) {
 
         Column(modifier = Modifier.padding(16.dp)) {
 
-            TasksHeaderSetting("Setting") {
+
+
+            TasksHeaderSetting(stringResource(id = R.string.setting)) {
                 navController.popBackStack()
 
 
             }
 
             Text(
-                text = "General",
+                text = stringResource(id = R.string.general),
                 fontSize = 25.sp,
                 color = Color.White
             )
@@ -184,7 +187,8 @@ fun SettingScreen(navController: NavHostController) {
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(Color.White)
-                    .fillMaxWidth().height(50.dp)
+                    .fillMaxWidth()
+                    .height(50.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Center,
@@ -195,7 +199,7 @@ fun SettingScreen(navController: NavHostController) {
                         onClick = { showLanguageDialog = true }
                     ) {
                         Text(
-                            text = "Language",
+                            text = stringResource(id = R.string.language),
                             fontSize = 18.sp
                         )
                     }
@@ -217,7 +221,8 @@ fun SettingScreen(navController: NavHostController) {
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(Color.White)
-                    .fillMaxWidth().height(50.dp)
+                    .fillMaxWidth()
+                    .height(50.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Center,
@@ -228,7 +233,7 @@ fun SettingScreen(navController: NavHostController) {
                         onClick = { showDeleteDialog = true }
                     ) {
                         Text(
-                            text = "Delete Account",
+                            text = stringResource(id = R.string.delete_account),
                             fontSize = 18.sp
                         )
                     }

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.eventapp.R
 import com.example.eventapp.ui.theme.LightPurple
 import com.example.eventapp.getIconName
 import com.example.eventapp.ui.theme.LightBlue
@@ -36,9 +37,16 @@ data class Task(
     val tagName: String = ""
 )
 
-enum class TaskType(val type: String, val color: String, val icon: String) {
-    Pending("Pending", LightPurple.toArgb().toString(), getIconName(Icons.Outlined.DateRange)),
-    OnGoing("On Going", LightGreen.toArgb().toString(), getIconName(Icons.Outlined.Build)),
-    Cancelled("Cancelled", LightRed.toArgb().toString(), getIconName(Icons.Outlined.Delete)),
-    Completed("Completed", LightBlue.toArgb().toString(), getIconName(Icons.Outlined.Done)),
+enum class TaskType(val resourceId: Int, val color: String, val icon: String) {
+
+    Pending(R.string.task_pending, LightPurple.toArgb().toString(), getIconName(Icons.Outlined.DateRange)),
+    OnGoing(R.string.task_ongoing, LightGreen.toArgb().toString(), getIconName(Icons.Outlined.Build)),
+    Cancelled(R.string.task_cancelled, LightRed.toArgb().toString(), getIconName(Icons.Outlined.Delete)),
+    Completed(R.string.task_completed, LightBlue.toArgb().toString(), getIconName(Icons.Outlined.Done))
+
 }
+
+data class SearchResults(
+    val taskResults: List<TaskWithTags>,
+    val tagResults: List<TagWithTaskLists>
+)

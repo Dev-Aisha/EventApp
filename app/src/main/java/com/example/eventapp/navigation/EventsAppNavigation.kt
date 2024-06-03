@@ -1,14 +1,9 @@
 package com.example.eventapp.navigation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,24 +17,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.eventapp.component.DatePicker
 import com.example.eventapp.component.MonthlyHorizontalCalendarView
-import com.example.eventapp.component.TimePicker
 import com.example.eventapp.component.TimePickerr
 import com.example.eventapp.screens.auth.AuthViewModel
 import com.example.eventapp.screens.auth.LoginScreen
 import com.example.eventapp.screens.auth.SignUpScreen
 import com.example.eventapp.screens.auth.SplashScreen
+import com.example.eventapp.screens.chart.ChartScreen
 import com.example.eventapp.screens.task.AddTagDialog
 import com.example.eventapp.screens.task.AddTaskScreen
 import com.example.eventapp.screens.task.AddTaskViewModel
 import com.example.eventapp.screens.task.CategoryScreen
+import com.example.eventapp.screens.task.EditTaskScreen
 import com.example.eventapp.screens.task.HomeScreen
 import com.example.eventapp.screens.task.SettingScreen
 import com.example.eventapp.screens.task.TaskByDateScreen
 import com.example.eventapp.screens.task.TaskViewModel
 import com.example.eventapp.screens.task.TasksByCategory
 import com.google.firebase.auth.FirebaseUser
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
 
 
 @Composable
@@ -97,18 +93,34 @@ fun NavGraphBuilder.mainAppNavigation(
             HomeScreen(userName.invoke(), navController, viewModel)
         }
 
+
+
+
+
+
         composable(Screens.MainApp.TaskByDate.route) {
             val viewmodel: TaskViewModel = hiltViewModel()
-            TaskByDateScreen(viewmodel)
+            TaskByDateScreen(viewmodel, navController)
         }
 
 
 
 
-        //Setting
-        composable(Screens.MainApp.CategoryScreen.route) {
 
-            SettingScreen(navController)
+
+        composable(Screens.MainApp.AddScreen.route) {
+            val viewmodel: AddTaskViewModel = hiltViewModel()
+            viewmodel.taskDate.value = it.savedStateHandle.get<String>("selectedDate").orEmpty()
+
+            AddTaskScreen(navController, viewmodel)
+        }
+
+
+
+
+        composable(Screens.MainApp.CategoryScreen.route) {
+            val taskViewModel: TaskViewModel = hiltViewModel()
+            CategoryScreen(userName.invoke(), taskViewModel, navController, logout)
 
 
 
@@ -131,19 +143,20 @@ fun NavGraphBuilder.mainAppNavigation(
 
 
 
-        composable(Screens.MainApp.AddScreen.route) {
-            val viewmodel: AddTaskViewModel = hiltViewModel()
-            viewmodel.taskDate.value = it.savedStateHandle.get<String>("selectedDate").orEmpty()
-
-            AddTaskScreen(navController, viewmodel)
-        }
-
-
-
         composable(Screens.MainApp.StaticsScreen.route) {
-            val taskViewModel: TaskViewModel = hiltViewModel()
-            CategoryScreen(userName.invoke(), taskViewModel, navController, logout)
+            ChartScreen(modifier = Modifier)
+
         }
+
+
+
+
+
+        composable(Screens.MainApp.Setting.route){
+            SettingScreen(navController)
+        }
+
+
 
 
         dialog(
@@ -187,6 +200,46 @@ fun NavGraphBuilder.mainAppNavigation(
             }
             val viewModel: TaskViewModel = hiltViewModel()
             TasksByCategory(tagWithTaskLists, navController, viewModel = viewModel)
+        }
+//
+//        composable(
+//            "${Screens.MainApp.EditTaskScreen.route}/{title}/{date}/{description}",
+//            arguments = listOf(
+//                navArgument("title") {
+//                    type = NavType.StringType
+//                },
+//                navArgument("date") {
+//                    type = NavType.StringType
+//                },
+//                navArgument("description") {
+//                    type = NavType.StringType
+//                }
+//            )
+//        ) {
+//            val viewModel: AddTaskViewModel = hiltViewModel()
+//            val title = it.arguments?.getString("title").orEmpty()
+//            val date = it.arguments?.getString("date").orEmpty()
+//            val description = it.arguments?.getString("description").orEmpty()
+//
+//            EditTaskScreen(navController, viewModel.taskType, viewModel.taskDate, viewModel.startTime,viewModel.description, )
+//        }
+
+//
+//        composable(Screens.MainApp.EditTaskScreen.route) {
+//            val viewModel: AddTaskViewModel = hiltViewModel()
+//            EditTaskScreen(navController, viewModel)
+//        }
+
+        composable(
+            "${Screens.MainApp.EditTaskScreen.route}/{taskId}", arguments =
+            listOf(navArgument("taskId") {
+                type = NavType.LongType
+            }
+            )
+        )
+        {
+            val viewmodel: AddTaskViewModel = hiltViewModel()
+            EditTaskScreen(navController, viewmodel, it.arguments?.getLong("taskId"), it)
         }
 
 

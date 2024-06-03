@@ -11,7 +11,7 @@ import com.example.eventapp.data.entity.Tags
 import com.example.eventapp.data.entity.Task
 import com.example.eventapp.data.entity.TaskTagCrossRef
 
-@Database(entities = [Task::class, Tags::class, TaskTagCrossRef::class], version = 3, exportSchema = false)
+@Database(entities = [Task::class, Tags::class, TaskTagCrossRef::class], version = 4, exportSchema = false)
 abstract class EventsDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
@@ -41,6 +41,26 @@ abstract class EventsDatabase : RoomDatabase() {
                     )
                 }
             }
+            val MIGRATION_3_4 = object : Migration(3, 4) {
+
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("ALTER TABLE tags_table ADD COLUMN isSelected INTEGER DEFAULT 0 NOT NULL")
+
+                }
+            }
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    EventsDatabase::class.java,
+                    "events_database"
+                )
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                    .fallbackToDestructiveMigration().build()
+                INSTANCE = instance
+                // return instance
+                instance
+            }
+
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
 
@@ -52,20 +72,20 @@ abstract class EventsDatabase : RoomDatabase() {
 //                }
 //            }
 
-
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    EventsDatabase::class.java,
-                    "events_database"
-                )
-                   //.addMigrations()
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
-                   .fallbackToDestructiveMigration().build()
-                INSTANCE = instance
-                // return instance
-                instance
-            }
+//
+//            return INSTANCE ?: synchronized(this) {
+//                val instance = Room.databaseBuilder(
+//                    context.applicationContext,
+//                    EventsDatabase::class.java,
+//                    "events_database"
+//                )
+//                   //.addMigrations()
+//                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+//                   .fallbackToDestructiveMigration().build()
+//                INSTANCE = instance
+//                // return instance
+//                instance
+//            }
         }
     }
 }

@@ -30,18 +30,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.eventapp.R
 import com.example.eventapp.component.CalendarWeeklyView
 import com.example.eventapp.component.TaskCard
 import java.time.LocalDate
 
 @Composable
-fun TaskByDateScreen(viewmodel: TaskViewModel) {
+fun TaskByDateScreen(viewmodel: TaskViewModel, navController: NavHostController) {
     val tasks = viewmodel.taskWithTags
 
     LaunchedEffect(Unit) {
         viewmodel.sortTasksByDate(LocalDate.now().toString())
-
     }
     var selectedDate by remember {
         mutableStateOf(LocalDate.now().toString())
@@ -107,7 +107,9 @@ fun TaskByDateScreen(viewmodel: TaskViewModel) {
                                                 taskWithTags.task.timeTo,
                                                 taskWithTags.tags,
                                                 task = taskWithTags.task,
-                                                viewModel = viewmodel
+                                                viewModel = viewmodel,
+                                                navController = navController
+
                                             )
                                         }
                                     }

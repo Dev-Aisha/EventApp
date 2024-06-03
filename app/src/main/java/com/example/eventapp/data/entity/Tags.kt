@@ -15,7 +15,9 @@ data class Tags(
     @ColumnInfo(name = "tag_color")
     val color: String,
     @ColumnInfo(name = "icon_name")
-    val iconName: String
+    val iconName: String,
+    @ColumnInfo(name = "isSelected")
+    var isSelected: Boolean,
 )
 
 @Entity(primaryKeys = ["task_Id", "tag_name"])
@@ -36,6 +38,8 @@ data class TagWithTaskLists(
     var tasks: List<Task>
 )
 
+
+
 data class TaskWithTags(
     @Embedded val task: Task,
     @Relation(
@@ -45,3 +49,5 @@ data class TaskWithTags(
     )
     var tags: List<Tags>
 )
+
+

@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">EventApp</string>
+    <string name="task_pending">Pending</string>
+    <string name="task_ongoing">On Going</string>
+    <string name="task_cancelled">Cancelled</string>
+    <string name="task_completed">Completed</string>
+
+    <string name="my_tasks">My Tasks</string>
+    <string name="today_tasks">Today Tasks</string>
+    <string name="view_all">View all</string>
+    <string name="hi">Hi,  %1$s</string>
+    <string name="let">Let\'s make this day productive</string>
+    <string name="task">Task</string>
+
+    //Setting Screen
+    <string name="setting">Setting</string>
+    <string name="general">General</string>
+    <string name="language">Language</string>
+    <string name="delete_account">Delete Account</string>
+
+
+
+
 </resources>

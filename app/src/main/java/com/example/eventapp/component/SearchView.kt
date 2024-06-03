@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
@@ -24,28 +25,29 @@ import com.example.eventapp.screens.task.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView(search : (parameter: String)-> Unit){
-    val searchPhrase = remember { mutableStateOf("") }
+fun SearchView(onSearch: (String) -> Unit) {
+
+    val searchPhrase = rememberSaveable { mutableStateOf("") }
     val viewModel: TaskViewModel = hiltViewModel()
 
     TextField(
         value = searchPhrase.value,
-
         modifier = Modifier.fillMaxWidth(),
-
         shape = RoundedCornerShape(20.dp),
         keyboardActions = KeyboardActions(
             onSearch = {
+                onSearch(searchPhrase.value)
 
-                val tagsWithTasksList = viewModel.tagWithTasks
+                val tasksList = viewModel.taskWithTags.value
 
-
-
-                val items = if (searchPhrase.value == "") {
-                    tagsWithTasksList
-            }else{
-
-
+                val filteredTasks =
+                    if (searchPhrase.value.isEmpty()) {
+                    tasksList
+                }
+                    else {
+                    tasksList.filter { task ->
+                        task.task.title.contains(searchPhrase.value, ignoreCase = true)
+                    }
                 }
 
             }
@@ -53,35 +55,27 @@ fun SearchView(search : (parameter: String)-> Unit){
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Search
         ),
-
-        onValueChange =
-        {
+        onValueChange = {
             searchPhrase.value = it
-            search(searchPhrase.value)
+            onSearch(it)
         },
-
-        placeholder =
-        {
+        placeholder = {
             Text(text = "Search for task")
         },
-
-        leadingIcon =
-        {
+        leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "Search Icon")
+                contentDescription = "Search Icon"
+            )
         },
-
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.LightGray,
             unfocusedContainerColor = Color.White,
             disabledContainerColor = Color.LightGray,
-            cursorColor = Color.Black,
-    ),
+            cursorColor = Color.Black
+        )
     )
-
 }
-
 
 
 

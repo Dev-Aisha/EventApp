@@ -41,13 +41,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.PopupProperties
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventapp.data.entity.Tags
 import com.example.eventapp.data.entity.Task
 import com.example.eventapp.navigation.Screens
-import com.example.eventapp.screens.task.AddTaskViewModel
 import com.example.eventapp.screens.task.TaskViewModel
 import com.example.eventapp.ui.theme.Navy
 import com.example.eventapp.ui.theme.PrimaryColor
@@ -55,21 +53,19 @@ import com.example.eventapp.ui.theme.PrimaryColor
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Tags?>, task: Task,
-             viewModel: TaskViewModel
+             viewModel: TaskViewModel, navController: NavHostController
 ) {
     val dividerHeight = remember {
         mutableStateOf(50.dp)
     }
 
 
-    val navController = rememberNavController()
-
     Card(
         modifier = Modifier
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = Color(
-                tag?.first()?.color?.toIntOrNull() ?: PrimaryColor.toArgb()
+                tag?.firstOrNull()?.color?.toIntOrNull() ?: PrimaryColor.toArgb()
             ).copy(0.4f)
         )
 
@@ -88,7 +84,7 @@ fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Ta
                             .height(dividerHeight.value)
                             .width(3.dp)
                             .background(
-                                Color(tag?.first()?.color?.toIntOrNull() ?: PrimaryColor.toArgb()),
+                                Color(tag?.firstOrNull()?.color?.toIntOrNull() ?: PrimaryColor.toArgb()),
                                 RoundedCornerShape(16.dp)
                             )
                             .padding(0.dp, 40.dp)
@@ -104,7 +100,8 @@ fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Ta
 //                        }
                         .onGloballyPositioned {
                             dividerHeight.value = it.size.height.dp / 2
-                        }) {
+                        }
+                    ) {
                         Text(
                             text = taskTitle,
                             fontSize = 25.sp,
@@ -114,16 +111,6 @@ fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Ta
                         Text(text = "$timeFrom - $timeTo", fontSize = 15.sp, color = Color.White)
                     }
                 }
-
-
-//                Icon(
-//                    Icons.Default.MoreVert,
-//                    contentDescription = "",
-//                    tint = Color.Gray,
-//                    modifier = Modifier.size(24.dp)
-//                )
-
-
 
 
                 var expanded by remember { mutableStateOf(false) }
@@ -158,7 +145,9 @@ fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Ta
                     ) {
                         DropdownMenuItem(
                             text = { Text("Edit") },
-                            onClick = { },
+                            onClick = {
+                                navController.navigate("${Screens.MainApp.EditTaskScreen.route}/${task.taskId}")
+                            },
                             leadingIcon = {
                                 Icon(
                                     Icons.Outlined.Edit,
@@ -184,85 +173,9 @@ fun TaskCard(taskTitle: String, timeFrom: String?, timeTo: String?, tag: List<Ta
                     }
 
 
-
-//                    val context: Context = LocalContext.current
-//                    DropdownMenu(
-//                        expanded = expanded,
-//                        onDismissRequest = { expanded = false },
-//                        properties = PopupProperties(clippingEnabled = false),
-////                    offset = DpOffset(0.dp, 64.dp)
-//                    ) {
-//                        DropdownMenuItem(
-//
-//                            { Text("Edit") },
-//                            leadingIcon = {
-//                                Icon(
-//                                    Icons.Outlined.Edit,
-//                                    contentDescription = null
-//                                )
-//                            },
-//                            onClick = {
-//                                expanded = false
-//                                navController.navigate(Screens.MainApp.AddScreen.route)
-//                            }
-//                        )
-//                        DropdownMenuItem(
-//
-//                            { Text("Delete") },
-//                            leadingIcon = {
-//                                Icon(
-//                                    Icons.Outlined.Delete,
-//                                    contentDescription = null
-//                                )
-//                            },
-//                            onClick =
-//                            {
-//                                expanded = false
-//
-//                                viewModel.deleteTask(task)
-//                                Toast.makeText(context, "Task deleted successfully", Toast.LENGTH_SHORT).show()
-//
-////                                tag.forEach {
-////                                    tag ->
-////                                    if (tag != null) {
-////                                        viewmodel.deleteTag(tag)
-////                                    }
-////                                }
-//
-//
-//                            }
-//
-//
-//                        )
-//                    }
-
-
                 }
 
-
-
-
-
-
-
-
-
-
-
                 //------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             }
 
